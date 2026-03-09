@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Noto+Sans+Arabic:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1c5f21",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#131f14",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans Arabic", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans Arabic', 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 bg-white dark:bg-background-dark px-6 md:px-20 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="size-10 bg-primary flex items-center justify-center rounded-lg text-white">
+<span class="material-symbols-outlined">biotech</span>
+</div>
+<div>
+<h1 class="text-primary text-xl font-bold leading-tight tracking-tight">مختبر الفيروز</h1>
+<p class="text-primary/70 text-xs font-medium">EL FAYROUZ LAB</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="md:hidden flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="max-w-7xl mx-auto w-full px-6 py-8">
+<!-- Search and Hero Section -->
+<div class="mb-10 text-center space-y-6">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">دليل التحاليل الطبية</h2>
+<p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">نقدم أدق النتائج المخبرية باستخدام أحدث التقنيات العالمية تحت إشراف طاقم طبي متخصص.</p>
+<div class="max-w-2xl mx-auto relative">
+<div class="flex items-center bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-primary/10 overflow-hidden p-1">
+<span class="material-symbols-outlined text-primary px-4">search</span>
+<input class="w-full border-none focus:ring-0 bg-transparent py-3 text-lg font-display" placeholder="ابحث عن اسم التحليل أو الكود..." type="text"/>
+<button class="bg-primary text-white px-8 py-2.5 rounded-lg font-bold hover:bg-primary/90 transition-all">بحث</button>
+</div>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex gap-3 overflow-x-auto pb-6 no-scrollbar snap-x">
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-6 font-medium snap-start">
+<span class="material-symbols-outlined text-[18px]">apps</span>
+                    الكل
+                </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 border border-primary/10 text-slate-700 dark:text-slate-200 px-6 font-medium hover:border-primary transition-colors snap-start">
+<span class="material-symbols-outlined text-[18px]">bloodtype</span>
+                    تحاليل الدم
+                </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 border border-primary/10 text-slate-700 dark:text-slate-200 px-6 font-medium hover:border-primary transition-colors snap-start">
+<span class="material-symbols-outlined text-[18px]">glucose</span>
+                    السكر
+                </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 border border-primary/10 text-slate-700 dark:text-slate-200 px-6 font-medium hover:border-primary transition-colors snap-start">
+<span class="material-symbols-outlined text-[18px]">female</span>
+                    الهرمونات
+                </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 border border-primary/10 text-slate-700 dark:text-slate-200 px-6 font-medium hover:border-primary transition-colors snap-start">
+<span class="material-symbols-outlined text-[18px]">medication</span>
+                    الكبد
+                </button>
+<button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 border border-primary/10 text-slate-700 dark:text-slate-200 px-6 font-medium hover:border-primary transition-colors snap-start">
+<span class="material-symbols-outlined text-[18px]">vital_signs</span>
+                    الغدة الدرقية
+                </button>
+</div>
+<!-- Grid of Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-primary/10 p-5 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">blood_pressure</span>
+</div>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">رائج</span>
+</div>
+<h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">صورة الدم الكاملة (CBC)</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">فحص شامل لمكونات الدم للكشف عن الأنيميا والالتهابات وغيرها.</p>
+<div class="flex items-center gap-4 mb-6 text-sm border-y border-slate-50 dark:border-slate-700 py-3">
+<div class="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>24 ساعة</span>
+</div>
+<div class="flex items-center gap-1 font-bold text-primary">
+<span>150 ر.س</span>
+</div>
+</div>
+<button class="w-full bg-primary/5 hover:bg-primary hover:text-white text-primary font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+                        عرض التفاصيل
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-primary/10 p-5 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">glucose</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">السكر التراكمي (HbA1c)</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">قياس متوسط مستويات السكر في الدم خلال الأشهر الثلاثة الماضية.</p>
+<div class="flex items-center gap-4 mb-6 text-sm border-y border-slate-50 dark:border-slate-700 py-3">
+<div class="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>12 ساعة</span>
+</div>
+<div class="flex items-center gap-1 font-bold text-primary">
+<span>120 ر.س</span>
+</div>
+</div>
+<button class="w-full bg-primary/5 hover:bg-primary hover:text-white text-primary font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+                        عرض التفاصيل
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+</button>
+</div>
+<!-- Card 3 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-primary/10 p-5 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">vital_signs</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">هرمون الغدة الدرقية (TSH)</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">تقييم وظائف الغدة الدرقية والكشف عن نشاطها أو خمولها.</p>
+<div class="flex items-center gap-4 mb-6 text-sm border-y border-slate-50 dark:border-slate-700 py-3">
+<div class="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>48 ساعة</span>
+</div>
+<div class="flex items-center gap-1 font-bold text-primary">
+<span>180 ر.س</span>
+</div>
+</div>
+<button class="w-full bg-primary/5 hover:bg-primary hover:text-white text-primary font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+                        عرض التفاصيل
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+</button>
+</div>
+<!-- Card 4 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-primary/10 p-5 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">water_drop</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">فيتامين د (Vitamin D)</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">قياس مستوى فيتامين د في الدم لضمان صحة العظام والمناعة.</p>
+<div class="flex items-center gap-4 mb-6 text-sm border-y border-slate-50 dark:border-slate-700 py-3">
+<div class="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>24 ساعة</span>
+</div>
+<div class="flex items-center gap-1 font-bold text-primary">
+<span>250 ر.س</span>
+</div>
+</div>
+<button class="w-full bg-primary/5 hover:bg-primary hover:text-white text-primary font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+                        عرض التفاصيل
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+</button>
+</div>
+<!-- Card 5 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-primary/10 p-5 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">medication</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">وظائف الكبد (LFT)</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">مجموعة من الاختبارات لتقييم صحة الكبد واكتشاف أي قصور.</p>
+<div class="flex items-center gap-4 mb-6 text-sm border-y border-slate-50 dark:border-slate-700 py-3">
+<div class="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>24 ساعة</span>
+</div>
+<div class="flex items-center gap-1 font-bold text-primary">
+<span>220 ر.س</span>
+</div>
+</div>
+<button class="w-full bg-primary/5 hover:bg-primary hover:text-white text-primary font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+                        عرض التفاصيل
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+</button>
+</div>
+<!-- Card 6 -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-primary/10 p-5 shadow-sm hover:shadow-md transition-shadow group">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/5 rounded-lg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+</div>
+<h3 class="text-xl font-bold mb-2 text-slate-900 dark:text-white">وظائف الكلى (KFT)</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm mb-4 leading-relaxed">فحص مستويات الكرياتينين واليوريا للاطمئنان على أداء الكلى.</p>
+<div class="flex items-center gap-4 mb-6 text-sm border-y border-slate-50 dark:border-slate-700 py-3">
+<div class="flex items-center gap-1 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>24 ساعة</span>
+</div>
+<div class="flex items-center gap-1 font-bold text-primary">
+<span>190 ر.س</span>
+</div>
+</div>
+<button class="w-full bg-primary/5 hover:bg-primary hover:text-white text-primary font-bold py-3 rounded-lg transition-all flex items-center justify-center gap-2">
+                        عرض التفاصيل
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+</button>
+</div>
+</div>
+<!-- Footer Pagination Placeholder -->
+<div class="mt-12 flex justify-center gap-2">
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-primary/10 bg-white dark:bg-slate-800 text-primary">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center bg-primary text-white font-bold">1</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-primary/10 bg-white dark:bg-slate-800 hover:bg-primary/5">2</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-primary/10 bg-white dark:bg-slate-800 hover:bg-primary/5">3</button>
+<button class="w-10 h-10 rounded-lg flex items-center justify-center border border-primary/10 bg-white dark:bg-slate-800 text-primary">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+</div>
+</main>
+<footer class="bg-white dark:bg-background-dark border-t border-primary/10 mt-auto py-10 px-6">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="col-span-1 md:col-span-2">
+<div class="flex items-center gap-3 mb-4">
+<div class="size-8 bg-primary flex items-center justify-center rounded text-white">
+<span class="material-symbols-outlined text-[20px]">biotech</span>
+</div>
+<h2 class="text-primary text-lg font-bold">مختبر الفيروز</h2>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed">نلتزم بتقديم خدمات مخبرية متميزة تدعم مسيرة الرعاية الصحية، مع التركيز على الدقة والسرعة والخصوصية التامة للمرضى.</p>
+</div>
+<div>
+<h4 class="font-bold mb-4">روابط سريعة</h4>
+<ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">الرئيسية</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">عن المختبر</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">خدمة الزيارات المنزلية</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">اتصل بنا</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-4">تواصل معنا</h4>
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">call</span>
+<span>9200XXXXX</span>
+</li>
+<li class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+<span>الرياض، المملكة العربية السعودية</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto border-t border-slate-100 dark:border-slate-800 mt-8 pt-8 text-center text-xs text-slate-500">
+                © 2024 مختبر الفيروز. جميع الحقوق محفوظة.
+            </div>
+</footer>
+</div>
+</body></html>

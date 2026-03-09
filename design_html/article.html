@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1c5f21",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#131f14",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 bg-white/80 backdrop-blur-md dark:bg-background-dark/80 px-6 md:px-20 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-2 rounded-lg text-white">
+<span class="material-symbols-outlined">biotech</span>
+</div>
+<h2 class="text-primary text-xl font-bold leading-tight tracking-tight">مختبر الفيروز</h2>
+</div>
+<div class="flex flex-1 justify-end gap-4 md:gap-8 items-center">
+<div class="hidden md:flex gap-6 text-sm font-semibold">
+<a class="text-primary hover:opacity-80" href="#">الرئيسية</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary" href="#">الفحوصات</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary" href="#">النتائج</a>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-full w-10 h-10 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="flex items-center justify-center rounded-full w-10 h-10 bg-primary/10 text-primary md:hidden">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-5xl mx-auto w-full px-4 md:px-10 py-8">
+<!-- Article Header Section -->
+<div class="mb-8">
+<div class="flex flex-col gap-2 mb-6">
+<nav class="flex text-sm text-primary/70 font-medium mb-2">
+<span>الرئيسية</span>
+<span class="mx-2">/</span>
+<span>الموسوعة الطبية</span>
+</nav>
+<h1 class="text-3xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 leading-tight">تحليل تعداد الدم الكامل (CBC)</h1>
+<div class="flex items-center gap-4 mt-4 text-slate-500 dark:text-slate-400 text-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span>24 مايو 2024</span>
+</div>
+<span class="h-4 w-px bg-slate-300 dark:bg-slate-700"></span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-primary">verified</span>
+<span class="font-bold text-primary">مختبر الفيروز</span>
+</div>
+</div>
+</div>
+<div class="relative w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl mb-8 group">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent z-10"></div>
+<img alt="Laboratory blood test tubes" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close up of medical blood samples in glass tubes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlmOKr0Mo-tn6-bG1gYpd9pYTAOC6goBh5ouareSPgEPaets8hakgo7DkZf2L3qaCrLOkCZCmV3lnU6h4nHq2sqU6b9Adpf8oohd7-i5abNVz4pyEJ-xWYivl8q7dxR4NnJTbMH-FWpHY0_s_dVR2JCKgSDxkwMIn68FWUKUI4kTwZoOOjPqc8051ICCyVgpEfMqeX60f50dzb1EhX991I28aNh2yhrGDLLthDc-MJTaRmVDkQ0VgWioiYWTMZS5t7HI8t6dSCILg"/>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+<!-- Right Content Area -->
+<div class="lg:col-span-8 space-y-10">
+<section>
+<h2 class="text-2xl font-bold text-primary mb-4 flex items-center gap-2">
+<span class="w-2 h-8 bg-primary rounded-full"></span>
+                                ما هو هذا الفحص؟
+                            </h2>
+<p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                                تحليل تعداد الدم الكامل (CBC) هو اختبار دم يقيس المكونات والخلايا المختلفة في دمك، بما في ذلك خلايا الدم الحمراء، وخلايا الدم البيضاء، والصفائح الدموية. يُعد هذا التحليل من أكثر الفحوصات الطبية شيوعاً وشمولاً لتقييم الصحة العامة.
+                            </p>
+</section>
+<section class="bg-primary/5 p-6 rounded-2xl border-r-4 border-primary">
+<h2 class="text-2xl font-bold text-primary mb-4">لماذا يُجرى هذا الفحص؟</h2>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span>مراجعة الصحة العامة كجزء من الفحص الروتيني.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span>تشخيص حالات مرضية مثل فقر الدم (الأنيميا) أو العدوى أو الالتهابات.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">check_circle</span>
+<span>مراقبة حالة طبية موجودة أو متابعة تأثير علاج معين.</span>
+</li>
+</ul>
+</section>
+<section>
+<h2 class="text-2xl font-bold text-primary mb-4 flex items-center gap-2">
+<span class="w-2 h-8 bg-primary rounded-full"></span>
+                                تعليمات التحضير للفحص
+                            </h2>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-4">
+                                في معظم الحالات، لا يتطلب فحص CBC الصيام. يمكنك الأكل والشرب بشكل طبيعي قبل الفحص. ومع ذلك، إذا كانت عينة الدم ستُستخدم لاختبارات أخرى إضافية، فقد يطلب منك طبيبك الصيام لفترة محددة.
+                            </p>
+</section>
+<!-- Special Educational Section: Table -->
+<section class="overflow-hidden border border-primary/20 rounded-2xl shadow-sm">
+<div class="bg-primary px-6 py-4">
+<h2 class="text-xl font-bold text-white flex items-center gap-2">
+<span class="material-symbols-outlined">menu_book</span>
+                                    كيف تقرأ نتيجة التحليل؟
+                                </h2>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-primary/10 text-primary font-bold">
+<th class="p-4 border-b border-primary/10">المؤشر (Indicator)</th>
+<th class="p-4 border-b border-primary/10">ماذا يعني؟</th>
+<th class="p-4 border-b border-primary/10">المستوى الطبيعي</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="p-4 font-bold">الهيموجلوبين (Hb)</td>
+<td class="p-4">بروتين ينقل الأكسجين في الدم</td>
+<td class="p-4">12 - 17.5 g/dL</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="p-4 font-bold">خلايا الدم البيضاء (WBC)</td>
+<td class="p-4">مقياس لقوة الجهاز المناعي والعدوى</td>
+<td class="p-4">4,500 - 11,000 /mcL</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+<td class="p-4 font-bold">الصفائح الدموية (Platelets)</td>
+<td class="p-4">مسؤولة عن تجلط الدم ومنع النزيف</td>
+<td class="p-4">150,000 - 450,000 /mcL</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Tips Section -->
+<section class="bg-slate-100 dark:bg-slate-800/50 p-8 rounded-2xl">
+<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">lightbulb</span>
+                                نصائح هامة بعد استلام النتيجة
+                            </h3>
+<p class="text-slate-600 dark:text-slate-400 mb-6">
+                                تذكر دائماً أن النتائج قد تختلف قليلاً من مختبر لآخر بناءً على الأجهزة المستخدمة. لا تحاول تشخيص نفسك بنفسك.
+                            </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-primary/10 shadow-sm">
+<h4 class="font-bold text-primary mb-2">استشر طبيبك</h4>
+<p class="text-sm">الطبيب هو الوحيد القادر على ربط النتائج بحالتك السريرية.</p>
+</div>
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-primary/10 shadow-sm">
+<h4 class="font-bold text-primary mb-2">احتفظ بالسجلات</h4>
+<p class="text-sm">قارن نتائجك الحالية بالسابقة لمراقبة أي تغيرات صحية.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Left Sidebar -->
+<aside class="lg:col-span-4 space-y-8">
+<!-- QR Code Section -->
+<div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-xl border border-primary/10 text-center sticky top-24">
+<div class="mb-4 inline-block bg-primary/5 p-4 rounded-xl">
+<div class="w-40 h-40 bg-white p-2 rounded-lg mx-auto border-2 border-primary/20">
+<!-- Using a placeholder for QR code image -->
+<img alt="QR Code to article" class="w-full h-full" data-alt="QR Code for easy digital access to this article" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAns1kEtHm5VxIW8HK6aO6kR0C0VWIkjIP5FVSsllLTjFzsftMh7lp9B-6mQ4Jt-sD-bJdSCcpqFP_lvJRgdaQoDgCokuK-z4ZQQkgSSqBxcn4QtG-s0JRE-GbuslMYUm48DSCFqxjdoOYNF7I4IOfrWO3VTD09ZLFvd0DzVKovYqZsPzGC2uz8U6rr-eJvyDZQB3C0MGQaEpXoR_X0bAKXya5o9zx-3z6OyGq6aR4wOOXT3H8ndOniYeNNJ1XnivpvdPz3mY_l8-k"/>
+</div>
+</div>
+<h3 class="font-bold text-slate-900 dark:text-slate-100 text-lg mb-2">الوصول السريع للتقرير</h3>
+<p class="text-sm text-slate-500 mb-4">امسح الكود للوصول إلى هذه الصفحة ومشاركة النتيجة مع طبيبك</p>
+<button class="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                                تحميل التقرير PDF
+                            </button>
+</div>
+<!-- Related Articles -->
+<div class="space-y-4">
+<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 px-2">مقالات ذات صلة</h3>
+<div class="space-y-3">
+<a class="flex gap-3 p-2 rounded-xl hover:bg-primary/5 transition-all group" href="#">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Blood glucose monitor" class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="Medical device for blood glucose monitoring" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHt6WXctbw89yLlEUnwsxsfaNIDv5V_jYdFG4ZCpRB5Ic15a0uipepxU5JS37E2tXaJGwTFMT8_hI3GV5d6PtPuXsc5q1HmHR9Q2K_B5ZlSjmNND7FrjKrqA4Y5_kcN9pZa0jrjG3vv2mF528VofzrUGXI7TkGit3ptdN_9AwVJt0wsiKBS-wDGz6ic9N3q6z_8_OqFR8DeKw0gLUw2EUqAY0Pwae0Sl9FzXMIAUEaOCwGyzDhXeHTZAUTc2thZxE3tB_X2Q6ieq8"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-bold text-sm leading-tight text-slate-800 dark:text-slate-200">فحص السكر التراكمي: دليلك الشامل</h4>
+<span class="text-xs text-primary mt-1">قبل 3 أيام</span>
+</div>
+</a>
+<a class="flex gap-3 p-2 rounded-xl hover:bg-primary/5 transition-all group" href="#">
+<div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Vitamins and supplements" class="w-full h-full object-cover group-hover:scale-110 transition-transform" data-alt="Assorted vitamins and pills on a surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb7RJIy1Vj8TSGK_a7hJ9xRNvfBgTV9Tyk9se1W4Y5LA9k8-LrRS4ZVW-HFw6n-c5GKlvj78Djm6INxFoKtNbHHcRJm4htAM4beY0GKQlSs3BJNb24dfeEZ4hpyZRwTnOJQODf9R0LxNO0-uCXP_aaLPQS3BdltD8Zu0IVEX8fnpxjoiMOkr9jVSPOY8EHXsAOHd-DJLNBA148Vr4Dcnx9vpobdeTYQdsDOG3rimOI1F6KdrlFxmDMbb61Y1ZJLmNxOSrxdMMqx3w"/>
+</div>
+<div class="flex flex-col justify-center">
+<h4 class="font-bold text-sm leading-tight text-slate-800 dark:text-slate-200">أعراض نقص فيتامين د وطرق العلاج</h4>
+<span class="text-xs text-primary mt-1">قبل أسبوع</span>
+</div>
+</a>
+</div>
+</div>
+<!-- Share Section -->
+<div class="bg-primary/5 p-6 rounded-2xl border border-dashed border-primary/30">
+<h4 class="font-bold text-primary mb-4 text-center">شارك هذه المعلومة</h4>
+<div class="flex justify-center gap-4">
+<button class="w-10 h-10 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">send</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">forum</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center text-primary shadow-sm hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">link</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-background-dark text-slate-400 py-12 px-6 md:px-20 mt-12 border-t border-slate-800">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-2 rounded-lg text-white">
+<span class="material-symbols-outlined">biotech</span>
+</div>
+<h2 class="text-white text-xl font-bold">مختبر الفيروز</h2>
+</div>
+<div class="flex gap-8 text-sm">
+<a class="hover:text-primary transition-colors" href="#">سياسة الخصوصية</a>
+<a class="hover:text-primary transition-colors" href="#">اتصل بنا</a>
+<a class="hover:text-primary transition-colors" href="#">عن المختبر</a>
+</div>
+<p class="text-xs">© 2024 جميع الحقوق محفوظة لمختبر الفيروز الطبي</p>
+</div>
+</footer>
+</div>
+</div>
+</body></html>
