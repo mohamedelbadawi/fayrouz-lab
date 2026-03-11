@@ -2,11 +2,15 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Beaker, FileText, Settings, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Beaker, FileText, Settings, LogOut, Menu, X, Users } from "lucide-react";
 import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 
-export function AdminSidebar() {
+interface AdminSidebarProps {
+  isSuperAdmin?: boolean;
+}
+
+export function AdminSidebar({ isSuperAdmin = false }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +27,7 @@ export function AdminSidebar() {
     { label: "إدارة الفحوصات", href: "/admin/tests", icon: Beaker },
     { label: "إدارة المقالات", href: "/admin/articles", icon: FileText },
     { label: "إعدادات الموقع", href: "/admin/settings", icon: Settings },
+    ...(isSuperAdmin ? [{ label: "إدارة المستخدمين", href: "/admin/users", icon: Users }] : []),
   ];
 
   return (
