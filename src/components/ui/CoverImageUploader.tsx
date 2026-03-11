@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { ImageIcon, Upload, X } from "lucide-react";
 import { Spinner } from "@/components/ui/Spinner";
+import { uploadImageAction } from "@/actions/upload";
 
 interface CoverImageUploaderProps {
   name: string;
@@ -24,15 +25,13 @@ export function CoverImageUploader({ name, defaultValue }: CoverImageUploaderPro
     fd.append("file", file);
 
     try {
-      const res = await fetch("/api/upload-article-image", {
-        method: "POST",
-        body: fd,
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error || "حدث خطأ أثناء الرفع");
+      const res = await uploadImageAction(fd);
+      if (res.error) {
+        setError(res.error);
+      } else if (res.url) {
+        setImageUrl(res.url);
       } else {
-        setImageUrl(data.url);
+        setError("حدث خطأ غير معروف");
       }
     } catch {
       setError("تعذّر الاتصال بالخادم، حاول مجدداً");

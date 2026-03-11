@@ -1,11 +1,10 @@
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
-import { createClient } from "@/utils/supabase/server";
+import { getSiteSettings } from "@/services/settings.service";
 
 export default async function ContactPage() {
-  const supabase = await createClient();
-  const { data: settings } = await supabase.from("site_settings").select("*").eq("id", 1).single();
+  const settings = await getSiteSettings();
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -32,7 +31,7 @@ export default async function ContactPage() {
                 <div>
                   <h3 className="font-tajawal font-bold text-xl text-gray-900 mb-2">موقعنا</h3>
                   <p className="font-cairo text-gray-600 leading-relaxed text-sm">
-                    {settings?.address || 'شارع فلسطين، مقابل مستشفى النور، بغداد، العراق'}
+                    {settings?.location_address || 'شارع فلسطين، مقابل مستشفى النور، بغداد، العراق'}
                   </p>
                 </div>
               </div>
@@ -44,7 +43,7 @@ export default async function ContactPage() {
                 <div>
                   <h3 className="font-tajawal font-bold text-xl text-gray-900 mb-2">هاتفنا</h3>
                   <p className="font-cairo text-gray-600 leading-relaxed text-sm whitespace-pre-wrap" dir="ltr">
-                    {settings?.phone || '+964 780 123 4567'}
+                    {settings?.contact_phone || '+964 780 123 4567'}
                   </p>
                 </div>
               </div>
@@ -56,7 +55,7 @@ export default async function ContactPage() {
                 <div>
                   <h3 className="font-tajawal font-bold text-xl text-gray-900 mb-2">البريد الإلكتروني</h3>
                   <p className="font-cairo text-gray-600 leading-relaxed text-sm break-all">
-                    {settings?.email || 'info@elfayrouz-lab.com'}
+                    {settings?.contact_email || 'info@elfayrouz-lab.com'}
                   </p>
                 </div>
               </div>
@@ -135,9 +134,9 @@ export default async function ContactPage() {
 
           {/* Map */}
           <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-4 h-[400px] relative overflow-hidden">
-            {settings?.map_link ? (
+            {settings?.location_map_url ? (
               <iframe
-                src={settings.map_link}
+                src={settings.location_map_url}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

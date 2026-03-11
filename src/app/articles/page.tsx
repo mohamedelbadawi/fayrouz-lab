@@ -1,8 +1,8 @@
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
-import { ArticleCard } from "@/components/ui/ArticleCard";
-import { ArticlesFilters } from "@/components/admin/ArticlesFilters";
-import { createClient } from "@/utils/supabase/server";
+import { ArticleCard } from "@/features/articles/components/ArticleCard";
+import { ArticlesFilters } from "@/features/articles/components/ArticlesFilters";
+import { getArticles } from "@/services/articles.service";
 
 export default async function ArticlesPage({ 
   searchParams 
@@ -13,40 +13,7 @@ export default async function ArticlesPage({
   const q = typeof resolvedParams.q === 'string' ? resolvedParams.q : '';
   const dateStr = typeof resolvedParams.date === 'string' ? resolvedParams.date : '';
 
-  const supabase = await createClient();
-
-  let queryBuilder = supabase
-    .from("articles")
-    .select("*")
-    .is("deleted_at", null)
-    .order("publish_date", { ascending: false });
-
-  if (q) {
-    queryBuilder = queryBuilder.or(`title.ilike.%${q}%,author.ilike.%${q}%`);
-  }
-
-  if (dateStr) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    let startDate: Date;
-    if (dateStr === "today") {
-      startDate = new Date(today);
-    } else if (dateStr === "week") {
-      startDate = new Date(today);
-      startDate.setDate(today.getDate() - today.getDay());
-    } else if (dateStr === "month") {
-      startDate = new Date(today.getFullYear(), today.getMonth(), 1);
-    }
-
-    // @ts-ignore
-    if (startDate) {
-      // @ts-ignore
-      queryBuilder = queryBuilder.gte("publish_date", startDate.toISOString());
-    }
-  }
-
-  const { data: articles } = await queryBuilder;
+  const articles = await getArticles({ query: q, dateStr });
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -72,10 +39,10 @@ export default async function ArticlesPage({
                 key={article.id}
                 id={article.id}
                 title={article.title}
-                summary={article.summary}
+                summary={article.summary ?? ""}
                 publishDate={new Date(article.publish_date).toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' })}
-                author={article.author}
-                imageUrl={article.featured_image}
+                author={article.author ?? ""}
+                imageUrl={article.featured_image ?? undefined}
               />
             ))}
             {(!articles || articles.length === 0) && (

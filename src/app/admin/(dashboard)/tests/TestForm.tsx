@@ -7,15 +7,18 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
 import { Spinner } from "@/components/ui/Spinner";
+import { MultiSelect, Option } from "@/components/ui/MultiSelect";
 
 type ActionResponse = { error?: string; success?: boolean };
 
 interface TestFormProps {
   initialData?: any;
   action: (formData: FormData) => Promise<ActionResponse>;
+  articles?: Option[];
+  initialLinkedArticles?: string[];
 }
 
-export function TestForm({ initialData, action }: TestFormProps) {
+export function TestForm({ initialData, action, articles = [], initialLinkedArticles = [] }: TestFormProps) {
   const [isPending, startTransition] = useTransition();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const router = useRouter();
@@ -185,6 +188,19 @@ export function TestForm({ initialData, action }: TestFormProps) {
               placeholder="مثال: 15,000"
             />
             {errors.price && <p className="text-red-500 text-xs font-cairo mt-1">{errors.price}</p>}
+          </div>
+
+          <div className="space-y-2 col-span-1 md:col-span-2">
+            <label className="block text-sm font-bold font-tajawal text-gray-900">المقالات المرتبطة بالفحص</label>
+            <MultiSelect
+              name="linked_articles"
+              options={articles}
+              defaultValue={initialLinkedArticles}
+              placeholder="اختر المقالات..."
+            />
+            <p className="text-xs text-gray-500 font-cairo mt-1">
+              اختر المقالات الطبية التي تشرح أو ترتبط بهذا التحليل.
+            </p>
           </div>
 
         </div>

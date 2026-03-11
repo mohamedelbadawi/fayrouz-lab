@@ -3,37 +3,33 @@
 import { useState, useTransition } from "react";
 import { Trash2, AlertTriangle } from "lucide-react";
 import { Spinner } from "@/components/ui/Spinner";
-import { useRouter } from "next/navigation";
 
 interface DeleteConfirmDialogProps {
   id: string;
   name: string;                  // display name for the item
-  endpoint: string;              // e.g. "/api/articles" or "/api/tests"
+  action: (id: string) => Promise<{ error?: string; success?: boolean }>;
   triggerClassName?: string;
 }
 
 export function DeleteConfirmDialog({
   id,
   name,
-  endpoint,
+  action,
   triggerClassName,
 }: DeleteConfirmDialogProps) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
-  const router = useRouter();
 
   function handleDelete() {
     setError("");
     startTransition(async () => {
-      const res = await fetch(`${endpoint}/${id}`, { method: "DELETE" });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setError(data.error || "حدث خطأ أثناء الحذف");
+      const result = await action(id);
+      if (result?.error) {
+        setError(result.error);
         return;
       }
       setOpen(false);
-      router.refresh();
     });
   }
 

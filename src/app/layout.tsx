@@ -24,8 +24,24 @@ const plexArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "EL FAYROUZ LAB – مختبر الفيروز للتحاليل الطبية",
-  description: "Medical Laboratory Website",
+  title: {
+    default: "مختبر الفيروز للتحاليل الطبية | El Fayrouz Lab",
+    template: "%s | مختبر الفيروز",
+  },
+  description: "المختبر الرائد للتحاليل الطبية، دقة وسرعة في النتائج. نقدم كافة أنواع الفحوصات الطبية بأحدث التقنيات.",
+  keywords: ["تحاليل طبية", "مختبر الفيروز", "تحليل دم", "فحوصات شاملة", "معمل تحاليل"],
+  openGraph: {
+    type: "website",
+    locale: "ar_EG",
+    siteName: "مختبر الفيروز",
+    title: "مختبر الفيروز للتحاليل الطبية",
+    description: "المختبر الرائد للتحاليل الطبية، دقة وسرعة في النتائج. نقدم كافة أنواع الفحوصات الطبية بأحدث التقنيات.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "مختبر الفيروز للتحاليل الطبية",
+    description: "المختبر الرائد للتحاليل الطبية، دقة وسرعة في النتائج.",
+  }
 };
 
 export default function RootLayout({
@@ -34,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body
         className={`${cairo.variable} ${tajawal.variable} ${plexArabic.variable} antialiased font-sans`}
       >

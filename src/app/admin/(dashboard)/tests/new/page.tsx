@@ -1,9 +1,14 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { TestForm } from "../TestForm";
-import { addTest } from "../actions";
+import { addTestAction } from "@/actions/tests";
+import { createClient } from "@/utils/supabase/server";
 
-export default function AdminNewTestPage() {
+export default async function AdminNewTestPage() {
+  const supabase = await createClient();
+  const { data: articles } = await supabase.from("articles").select("id, title").is("deleted_at", null);
+  
+  const articleOptions = articles?.map(a => ({ value: a.id, label: a.title })) || [];
   return (
     <div className="space-y-8">
       
@@ -21,7 +26,7 @@ export default function AdminNewTestPage() {
         </div>
       </div>
 
-      <TestForm action={addTest} />
+      <TestForm action={addTestAction} articles={articleOptions} />
     </div>
   );
 }

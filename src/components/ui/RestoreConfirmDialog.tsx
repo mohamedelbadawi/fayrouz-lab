@@ -3,38 +3,33 @@
 import { useState, useTransition } from "react";
 import { RefreshCw, Info } from "lucide-react";
 import { Spinner } from "@/components/ui/Spinner";
-import { useRouter } from "next/navigation";
 
 interface RestoreConfirmDialogProps {
   id: string;
   name: string;                  // display name for the item
-  endpoint: string;              // e.g. "/api/articles" or "/api/tests"
+  action: (id: string) => Promise<{ error?: string; success?: boolean }>;
   triggerClassName?: string;
 }
 
 export function RestoreConfirmDialog({
   id,
   name,
-  endpoint,
+  action,
   triggerClassName,
 }: RestoreConfirmDialogProps) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState("");
-  const router = useRouter();
 
   function handleRestore() {
     setError("");
     startTransition(async () => {
-      // call /api/xyz/[id]/restore
-      const res = await fetch(`${endpoint}/${id}/restore`, { method: "POST" });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        setError(data.error || "حدث خطأ أثناء الاسترجاع");
+      const result = await action(id);
+      if (result?.error) {
+        setError(result.error);
         return;
       }
       setOpen(false);
-      router.refresh();
     });
   }
 

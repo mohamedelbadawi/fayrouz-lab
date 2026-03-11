@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
 
 @theme {
   --color-primary-dark-green: #1c5f21;

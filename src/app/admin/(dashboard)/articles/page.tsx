@@ -1,10 +1,11 @@
 import { Plus, Edit2, Eye } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { createClient } from "@/utils/supabase/server";
+import { getArticles } from "@/services/articles.service";
 import { DeleteConfirmDialog } from "@/components/ui/DeleteConfirmDialog";
 import { RestoreConfirmDialog } from "@/components/ui/RestoreConfirmDialog";
-import { ArticlesFilters } from "@/components/admin/ArticlesFilters";
+import { ArticlesFilters } from "@/features/articles/components/ArticlesFilters";
+import { deleteArticleAction, restoreArticleAction } from "@/actions/articles";
 
 export default async function AdminArticlesPage({
   searchParams,
@@ -12,35 +13,8 @@ export default async function AdminArticlesPage({
   searchParams: Promise<{ q?: string; date?: string }>;
 }) {
   const { q, date } = await searchParams;
-  const supabase = await createClient();
-
-  let query = supabase
-    .from("articles")
-    .select("*")
-    .order("publish_date", { ascending: false });
-
-  if (q) {
-    query = query.or(`title.ilike.%${q}%,author.ilike.%${q}%`);
-  }
-
-  if (date) {
-    const now = new Date();
-    let startDate = new Date();
-    
-    if (date === "today") {
-      startDate.setHours(0, 0, 0, 0);
-    } else if (date === "week") {
-      startDate.setDate(now.getDate() - 7);
-    } else if (date === "month") {
-      startDate.setMonth(now.getMonth() - 1);
-    }
-
-    if (date === "today" || date === "week" || date === "month") {
-      query = query.gte("publish_date", startDate.toISOString());
-    }
-  }
-
-  const { data: articles } = await query;
+  
+  const articles = await getArticles({ query: q, dateStr: date, includeDeleted: true });
 
   return (
     <div className="space-y-8">
@@ -88,14 +62,14 @@ export default async function AdminArticlesPage({
                    <RestoreConfirmDialog
                      id={article.id}
                      name={article.title}
-                     endpoint="/api/articles"
+                     action={restoreArticleAction}
                      triggerClassName="w-8 h-8 rounded-full bg-white/90 text-blue-600 flex items-center justify-center hover:bg-white shadow"
                    />
                  ) : (
                    <DeleteConfirmDialog
                      id={article.id}
                      name={article.title}
-                     endpoint="/api/articles"
+                     action={deleteArticleAction}
                      triggerClassName="w-8 h-8 rounded-full bg-white/90 text-red-600 flex items-center justify-center hover:bg-white shadow"
                    />
                  )}

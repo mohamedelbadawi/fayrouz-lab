@@ -1,8 +1,8 @@
 import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
-import { TestCard } from "@/components/ui/TestCard";
-import { FrontTestsFilters } from "@/components/ui/FrontTestsFilters";
-import { createClient } from "@/utils/supabase/server";
+import { TestCard } from "@/features/tests/components/TestCard";
+import { FrontTestsFilters } from "@/features/tests/components/FrontTestsFilters";
+import { getTests } from "@/services/tests.service";
 
 export default async function TestsPage({ 
   searchParams 
@@ -13,23 +13,7 @@ export default async function TestsPage({
   const q = typeof resolvedParams.q === 'string' ? resolvedParams.q : '';
   const category = typeof resolvedParams.category === 'string' ? resolvedParams.category : '';
 
-  const supabase = await createClient();
-
-  let queryBuilder = supabase
-    .from("tests")
-    .select("*")
-    .is("deleted_at", null)
-    .order("name");
-
-  if (q) {
-    queryBuilder = queryBuilder.or(`name.ilike.%${q}%,description.ilike.%${q}%`);
-  }
-
-  if (category && category !== "all") {
-    queryBuilder = queryBuilder.eq("category", category);
-  }
-
-  const { data: tests } = await queryBuilder;
+  const tests = await getTests({ query: q, category });
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -60,7 +44,7 @@ export default async function TestsPage({
                 key={test.id}
                 id={test.id}
                 name={test.name}
-                description={test.description}
+                description={test.description ?? ""}
                 category={test.category === 'blood' ? 'أمراض الدم' : test.category === 'organs' ? 'وظائف الأعضاء' : 'فيتامينات'}
                 price={test.price}
                 resultTime={test.result_time}

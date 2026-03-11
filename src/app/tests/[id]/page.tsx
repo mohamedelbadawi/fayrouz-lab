@@ -2,27 +2,39 @@ import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 import { Clock, Beaker, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/server";
+import { getTestById } from "@/services/tests.service";
+import { TEST_CATEGORIES } from "@/constants/medical";
 import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const test = await getTestById(id);
+  
+  if (!test) return { title: "فحص غير موجود - مختبر الفيروز" };
+  
+  const plainTextDescription = test.description ? test.description.replace(/<[^>]*>?/gm, '').slice(0, 160) : `تعرف على تحليل ${test.name} وسعره ومدة النتيجة.`;
+
+  return {
+    title: `تحليل ${test.name}`,
+    description: plainTextDescription,
+    openGraph: {
+      title: `تحليل ${test.name}`,
+      description: plainTextDescription,
+    }
+  };
+}
 
 export default async function TestDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supabase = await createClient();
+  
+  const test = await getTestById(id);
 
-  const { data: test, error } = await supabase
-    .from("tests")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error || !test) {
+  if (!test) {
     notFound();
   }
 
-  const categoryLabel = 
-    test.category === 'blood' ? 'أمراض الدم' :
-    test.category === 'organs' ? 'وظائف الأعضاء' :
-    test.category === 'vitamins' ? 'الفيتامينات' : test.category;
+  const categoryLabel = TEST_CATEGORIES[test.category] || test.category;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">

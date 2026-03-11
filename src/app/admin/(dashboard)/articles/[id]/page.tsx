@@ -5,6 +5,8 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect, notFound } from "next/navigation";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
+import { editArticleAction } from "@/actions/articles";
+import { MultiSelect } from "@/components/ui/MultiSelect";
 
 export default async function AdminEditArticlePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -16,41 +18,17 @@ export default async function AdminEditArticlePage({ params }: { params: Promise
     .eq("id", id)
     .single();
 
+  const { data: tests } = await supabase.from("tests").select("id, name").is("deleted_at", null);
+  const { data: linkedTestsData } = await supabase.from("article_tests").select("test_id").eq("article_id", id);
+  
+  const testOptions = tests?.map(t => ({ value: t.id, label: t.name })) || [];
+  const linkedTests = linkedTestsData?.map(link => link.test_id) || [];
+
   if (error || !article) {
     notFound();
   }
 
-  async function editArticle(formData: FormData) {
-    "use server";
-    const supabase = await createClient();
-
-    const title = formData.get("title") as string;
-    const summary = formData.get("summary") as string;
-    const content = formData.get("content") as string;
-    const author = formData.get("author") as string;
-    const featured_image = formData.get("featured_image") as string;
-
-    const { error: updateError } = await supabase
-      .from("articles")
-      .update({
-        title,
-        summary,
-        content,
-        author,
-        featured_image,
-      })
-      .eq("id", id);
-
-    if (updateError) {
-      console.error("Error updating article:", updateError);
-      return;
-    }
-
-    revalidatePath("/admin/articles");
-    revalidatePath("/articles");
-    revalidatePath("/");
-    redirect("/admin/articles");
-  }
+  const updateArticleAction = editArticleAction.bind(null, id);
 
   return (
     <div className="space-y-8">
@@ -71,7 +49,7 @@ export default async function AdminEditArticlePage({ params }: { params: Promise
 
       {/* Form Card */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <form action={editArticle} className="p-6 md:p-8">
+        <form action={updateArticleAction as (formData: FormData) => void} className="p-6 md:p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <div className="space-y-2 md:col-span-2">
@@ -117,6 +95,19 @@ export default async function AdminEditArticlePage({ params }: { params: Promise
                 required
                 className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl focus:ring-2 focus:ring-primary-light-green/20 focus:border-primary-light-green block p-4 font-cairo transition-all"
               />
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <label className="block text-sm font-bold font-tajawal text-gray-900">التحاليل المرتبطة بالمقال</label>
+              <MultiSelect
+                name="linked_tests"
+                options={testOptions}
+                defaultValue={linkedTests}
+                placeholder="اختر التحاليل المرتبطة..."
+              />
+              <p className="text-xs text-gray-500 font-cairo mt-1">
+                يمكنك اختيار أكثر من فحص ليظهر في صفحة المقال.
+              </p>
             </div>
 
             <div className="space-y-2 md:col-span-2">

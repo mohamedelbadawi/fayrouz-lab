@@ -5,38 +5,14 @@ import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { RichTextEditor } from "@/components/ui/RichTextEditor";
+import { addArticleAction } from "@/actions/articles";
+import { MultiSelect } from "@/components/ui/MultiSelect";
 
-export default function AdminNewArticlePage() {
-  async function addArticle(formData: FormData) {
-    "use server";
-    const supabase = await createClient();
-
-    const title = formData.get("title") as string;
-    const summary = formData.get("summary") as string;
-    const content = formData.get("content") as string;
-    const author = formData.get("author") as string;
-    const featured_image = formData.get("featured_image") as string;
-
-    const { error } = await supabase.from("articles").insert({
-      title,
-      summary,
-      content,
-      author,
-      featured_image,
-      publish_date: new Date().toISOString(),
-    });
-
-    if (error) {
-      console.error("Error inserting article:", error);
-      // Handle error
-      return;
-    }
-
-    revalidatePath("/admin/articles");
-    revalidatePath("/articles");
-    revalidatePath("/");
-    redirect("/admin/articles");
-  }
+export default async function AdminNewArticlePage() {
+  const supabase = await createClient();
+  const { data: tests } = await supabase.from("tests").select("id, name").is("deleted_at", null);
+  
+  const testOptions = tests?.map(t => ({ value: t.id, label: t.name })) || [];
 
   return (
     <div className="space-y-8">
@@ -57,7 +33,7 @@ export default function AdminNewArticlePage() {
 
       {/* Form Card */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <form action={addArticle} className="p-6 md:p-8">
+        <form action={addArticleAction as (formData: FormData) => void} className="p-6 md:p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             <div className="space-y-2 md:col-span-2">
@@ -103,6 +79,18 @@ export default function AdminNewArticlePage() {
                 placeholder="مثال: د. أحمد كريم"
                 defaultValue="إدارة المختبر"
               />
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <label className="block text-sm font-bold font-tajawal text-gray-900">التحاليل المرتبطة بالمقال</label>
+              <MultiSelect
+                name="linked_tests"
+                options={testOptions}
+                placeholder="اختر التحاليل المرتبطة..."
+              />
+              <p className="text-xs text-gray-500 font-cairo mt-1">
+                يمكنك اختيار أكثر من فحص ليظهر في صفحة المقال.
+              </p>
             </div>
 
             <div className="space-y-2 md:col-span-2">

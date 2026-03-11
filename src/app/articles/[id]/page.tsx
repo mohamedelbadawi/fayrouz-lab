@@ -4,39 +4,45 @@ import { QRCode } from "@/components/ui/QRCode";
 import { Calendar, User, Share2, Facebook, Twitter, Link as LinkIcon, Beaker } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { createClient } from "@/utils/supabase/server";
+import { getArticleById, getRelatedTestsForArticle, getRecentArticles } from "@/services/articles.service";
 import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const article = await getArticleById(id);
+  
+  if (!article) return { title: "مقال غير موجود - مختبر الفيروز" };
+
+  return {
+    title: article.title,
+    description: article.summary || undefined,
+    openGraph: {
+      title: article.title,
+      description: article.summary || undefined,
+      images: article.featured_image ? [article.featured_image] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.summary || undefined,
+      images: article.featured_image ? [article.featured_image] : [],
+    }
+  };
+}
 
 export default async function ArticleDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supabase = await createClient();
 
-  // Fetch the article
-  const { data: article, error } = await supabase
-    .from("articles")
-    .select("*")
-    .eq("id", id)
-    .single();
+  // Fetch data concurrently if possible, or sequentially depending on need
+  const article = await getArticleById(id);
 
-  if (error || !article) {
+  if (!article) {
     notFound();
   }
 
-  // Fetch linked tests via the article_tests join table
-  const { data: linkedTestsRaw } = await supabase
-    .from("article_tests")
-    .select("test_id, tests(id, name, price, result_time, category)")
-    .eq("article_id", id);
-
-  const linkedTests = (linkedTestsRaw ?? []).map((row: any) => row.tests).filter(Boolean);
-
-  // Fetch other recent articles for the bottom section (excluding current)
-  const { data: relatedArticles } = await supabase
-    .from("articles")
-    .select("id, title, summary, author, publish_date")
-    .neq("id", id)
-    .order("publish_date", { ascending: false })
-    .limit(2);
+  const linkedTests = await getRelatedTestsForArticle(id);
+  const relatedArticles = await getRecentArticles(id, 2);
 
   const publishDate = new Date(article.publish_date).toLocaleDateString('ar-EG', {
     year: 'numeric',

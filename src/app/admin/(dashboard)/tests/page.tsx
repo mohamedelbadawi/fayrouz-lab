@@ -1,9 +1,10 @@
 import { Plus, Edit2, Eye } from "lucide-react";
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/server";
+import { getTests } from "@/services/tests.service";
 import { DeleteConfirmDialog } from "@/components/ui/DeleteConfirmDialog";
 import { RestoreConfirmDialog } from "@/components/ui/RestoreConfirmDialog";
-import { TestsFilters } from "@/components/admin/TestsFilters";
+import { TestsFilters } from "@/features/tests/components/TestsFilters";
+import { deleteTestAction, restoreTestAction } from "@/actions/tests";
 
 export default async function AdminTestsPage({
   searchParams,
@@ -11,22 +12,8 @@ export default async function AdminTestsPage({
   searchParams: Promise<{ q?: string; category?: string }>;
 }) {
   const { q, category } = await searchParams;
-  const supabase = await createClient();
-
-  let query = supabase
-    .from("tests")
-    .select("*")
-    .order("name");
-
-  if (q) {
-    query = query.or(`name.ilike.%${q}%,description.ilike.%${q}%`);
-  }
-
-  if (category) {
-    query = query.eq("category", category);
-  }
-
-  const { data: tests } = await query;
+  
+  const tests = await getTests({ query: q, category, includeDeleted: true });
 
   // Helper to safely strip HTML tags
   const stripHtml = (html: string | null) => {
@@ -102,14 +89,14 @@ export default async function AdminTestsPage({
                         <RestoreConfirmDialog
                           id={test.id}
                           name={test.name}
-                          endpoint="/api/tests"
+                          action={restoreTestAction}
                           triggerClassName="text-gray-400 hover:text-blue-600 transition-colors"
                         />
                       ) : (
                         <DeleteConfirmDialog
                           id={test.id}
                           name={test.name}
-                          endpoint="/api/tests"
+                          action={deleteTestAction}
                           triggerClassName="text-gray-400 hover:text-red-600 transition-colors"
                         />
                       )}
