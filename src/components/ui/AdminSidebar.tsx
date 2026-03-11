@@ -14,9 +14,14 @@ interface AdminSidebarProps {
     can_manage_settings: boolean;
     can_manage_users: boolean;
   };
+  user?: {
+    email: string;
+    fullName: string;
+    roleLabel: string;
+  };
 }
 
-export function AdminSidebar({ permissions }: AdminSidebarProps) {
+export function AdminSidebar({ permissions, user }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -96,12 +101,26 @@ export function AdminSidebar({ permissions }: AdminSidebarProps) {
         </nav>
 
         {/* Footer actions */}
-        <div className="p-4 border-t border-gray-50 flex-shrink-0">
+        <div className="p-4 border-t border-gray-50 flex-shrink-0 space-y-2">
+          {user && (
+            <div className="px-4 py-3 mb-2 bg-gray-50 rounded-xl border border-gray-100 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-primary-dark-green text-white flex items-center justify-center font-tajawal font-bold shrink-0 shadow-sm">
+                {user.fullName.charAt(0)}
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-tajawal font-bold text-gray-900 truncate tracking-tight">{user.fullName}</p>
+                <div className="flex items-center gap-1.5 overflow-hidden">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 shadow-[0_0_4px_rgba(34,197,94,0.5)]"></span>
+                  <p className="text-[10px] font-cairo font-bold text-gray-500 truncate uppercase tracking-wider">{user.roleLabel}</p>
+                </div>
+              </div>
+            </div>
+          )}
           <button 
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 w-full text-right text-red-600 font-tajawal font-medium hover:bg-red-50 rounded-xl transition-colors"
+            className="flex items-center gap-3 px-4 py-3 w-full text-right text-red-600 font-tajawal font-medium hover:bg-red-50 rounded-xl transition-colors group"
           >
-            <LogOut className="w-5 h-5 ltr:rotate-180" />
+            <LogOut className="w-5 h-5 ltr:rotate-180 group-hover:-translate-x-1 transition-transform" />
             تسجيل الخروج
           </button>
         </div>
