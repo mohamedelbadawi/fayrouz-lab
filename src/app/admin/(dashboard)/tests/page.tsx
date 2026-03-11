@@ -5,15 +5,25 @@ import { DeleteConfirmDialog } from "@/components/ui/DeleteConfirmDialog";
 import { RestoreConfirmDialog } from "@/components/ui/RestoreConfirmDialog";
 import { TestsFilters } from "@/features/tests/components/TestsFilters";
 import { deleteTestAction, restoreTestAction } from "@/actions/tests";
+import { Pagination } from "@/components/ui/Pagination";
 
 export default async function AdminTestsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; category?: string }>;
+  searchParams: Promise<{ q?: string; category?: string; page?: string }>;
 }) {
-  const { q, category } = await searchParams;
+  const { q, category, page: pageParam } = await searchParams;
+  const page = typeof pageParam === 'string' ? parseInt(pageParam) : 1;
+  const pageSize = 10;
   
-  const { data: tests } = await getTests({ query: q, category, includeDeleted: true });
+  const { data: tests, totalCount } = await getTests({ 
+    query: q, 
+    category, 
+    includeDeleted: true,
+    page,
+    pageSize
+  });
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   // Helper to safely strip HTML tags
   const stripHtml = (html: string | null) => {
@@ -113,9 +123,10 @@ export default async function AdminTestsPage({
           </table>
         </div>
         
-        {/* Pagination placeholder info */}
-        <div className="p-4 border-t border-gray-50 flex items-center justify-between text-sm text-gray-500 font-cairo">
-          <span>عرض {tests?.length || 0} فحص</span>
+        {/* Pagination */}
+        <div className="p-4 border-t border-gray-50 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500 font-cairo">
+          <span>عرض {tests?.length || 0} من أصل {totalCount} فحص</span>
+          <Pagination currentPage={page} totalPages={totalPages} />
         </div>
       </div>
     

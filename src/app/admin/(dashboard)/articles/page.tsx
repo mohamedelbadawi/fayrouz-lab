@@ -6,15 +6,25 @@ import { DeleteConfirmDialog } from "@/components/ui/DeleteConfirmDialog";
 import { RestoreConfirmDialog } from "@/components/ui/RestoreConfirmDialog";
 import { ArticlesFilters } from "@/features/articles/components/ArticlesFilters";
 import { deleteArticleAction, restoreArticleAction } from "@/actions/articles";
+import { Pagination } from "@/components/ui/Pagination";
 
 export default async function AdminArticlesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; date?: string }>;
+  searchParams: Promise<{ q?: string; date?: string; page?: string }>;
 }) {
-  const { q, date } = await searchParams;
+  const { q, date, page: pageParam } = await searchParams;
+  const page = typeof pageParam === 'string' ? parseInt(pageParam) : 1;
+  const pageSize = 9;
   
-  const { data: articles } = await getArticles({ query: q, dateStr: date, includeDeleted: true });
+  const { data: articles, totalCount } = await getArticles({ 
+    query: q, 
+    dateStr: date, 
+    includeDeleted: true,
+    page,
+    pageSize
+  });
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
     <div className="space-y-8">
@@ -98,16 +108,9 @@ export default async function AdminArticlesPage({
       </div>
       
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-2 font-tajawal mt-8 hidden">
-        <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-primary-dark-green transition-colors disabled:opacity-50" disabled>
-          السابق
-        </button>
-        <button className="w-10 h-10 rounded-xl bg-primary-dark-green text-white flex items-center justify-center font-bold">
-          1
-        </button>
-        <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-primary-dark-green transition-colors">
-          التالي
-        </button>
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-t border-gray-100 text-sm text-gray-500 font-cairo bg-white -mx-6 px-6 rounded-b-2xl">
+        <span>عرض {articles?.length || 0} من أصل {totalCount} مقال</span>
+        <Pagination currentPage={page} totalPages={totalPages} />
       </div>
     
     </div>
