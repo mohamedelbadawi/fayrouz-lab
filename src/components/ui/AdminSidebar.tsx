@@ -7,10 +7,16 @@ import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 
 interface AdminSidebarProps {
-  isSuperAdmin?: boolean;
+  permissions?: {
+    isSuperAdmin: boolean;
+    can_manage_tests: boolean;
+    can_manage_articles: boolean;
+    can_manage_settings: boolean;
+    can_manage_users: boolean;
+  };
 }
 
-export function AdminSidebar({ isSuperAdmin = false }: AdminSidebarProps) {
+export function AdminSidebar({ permissions }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -22,13 +28,20 @@ export function AdminSidebar({ isSuperAdmin = false }: AdminSidebarProps) {
     router.refresh();
   };
 
-  const navItems = [
-    { label: "لوحة التحكم", href: "/admin", icon: LayoutDashboard },
-    { label: "إدارة الفحوصات", href: "/admin/tests", icon: Beaker },
-    { label: "إدارة المقالات", href: "/admin/articles", icon: FileText },
-    { label: "إعدادات الموقع", href: "/admin/settings", icon: Settings },
-    ...(isSuperAdmin ? [{ label: "إدارة المستخدمين", href: "/admin/users", icon: Users }] : []),
+  const allNavItems = [
+    { label: "لوحة التحكم", href: "/admin", icon: LayoutDashboard, permission: null },
+    { label: "إدارة الفحوصات", href: "/admin/tests", icon: Beaker, permission: "can_manage_tests" },
+    { label: "إدارة المقالات", href: "/admin/articles", icon: FileText, permission: "can_manage_articles" },
+    { label: "إعدادات الموقع", href: "/admin/settings", icon: Settings, permission: "can_manage_settings" },
+    { label: "إدارة المستخدمين", href: "/admin/users", icon: Users, permission: "can_manage_users" },
   ];
+
+  // Filter nav items based on permissions
+  const navItems = allNavItems.filter((item) => {
+    if (!item.permission) return true; // always show (e.g. dashboard)
+    if (!permissions) return true;     // no permissions passed = show all (e.g. during loading)
+    return (permissions as any)[item.permission] === true;
+  });
 
   return (
     <>
