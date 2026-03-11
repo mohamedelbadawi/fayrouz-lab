@@ -52,6 +52,16 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Force password change on first login
+  if (user && pathname.startsWith("/admin") && !pathname.startsWith("/admin/change-password")) {
+    const mustChange = user.user_metadata?.force_password_change === true;
+    if (mustChange) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/admin/change-password";
+      return NextResponse.redirect(url);
+    }
+  }
+
   // Permission-based route guards (for authenticated users)
   if (user && pathname.startsWith("/admin")) {
     // Find which route needs a permission check

@@ -51,11 +51,12 @@ export async function createUserAction(formData: FormData) {
 
   const adminClient = createAdminClient();
 
-  // Create auth user
+  // Create auth user with a force-password-change flag
   const { data: newUser, error: createError } = await adminClient.auth.admin.createUser({
     email,
     password,
     email_confirm: true, // skip email confirmation
+    user_metadata: { force_password_change: true },
   });
 
   if (createError || !newUser?.user) {
