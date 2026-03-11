@@ -2,7 +2,7 @@
 
 import { createAdminClient } from "@/utils/supabase/admin";
 import { createClient } from "@/utils/supabase/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export type UserPermissions = {
   can_manage_tests: boolean;
@@ -157,3 +157,22 @@ export async function getUserRoles() {
   }
   return data;
 }
+
+/**
+ * Manually revalidate all cached public data.
+ */
+export async function revalidateAllAction() {
+  const auth = await assertSuperAdmin();
+  if (auth.error) return { error: auth.error };
+
+  (revalidateTag as any)("articles");
+  (revalidateTag as any)("tests");
+  
+  // Also revalidate key paths
+  revalidatePath("/", "page");
+  revalidatePath("/articles", "page");
+  revalidatePath("/tests", "page");
+
+  return { success: true };
+}
+

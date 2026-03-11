@@ -1,9 +1,21 @@
 import { Users, FileText, Beaker, TrendingUp, Clock, ArrowLeft, Pencil, Plus } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
+import { RefreshCacheButton } from "./RefreshCacheButton";
 
 export default async function AdminDashboardPage() {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let isSuperAdmin = false;
+  if (user) {
+    const { data: roleData } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .single();
+    isSuperAdmin = roleData?.role === "super_admin";
+  }
 
   // Get exact counts
   const { count: testsCount } = await supabase
@@ -141,12 +153,13 @@ export default async function AdminDashboardPage() {
               </div>
               <span className="font-tajawal font-bold text-blue-900">إضافة تحليل جديد</span>
             </Link>
-            <Link href="/admin/articles/new" className="p-4 border border-green-100 bg-green-50/50 hover:bg-green-50 rounded-xl flex items-center gap-3 transition-colors group">
+            <Link href="/admin/articles/new" className="p-4 border border-green-100 bg-green-50/50 hover:bg-green-50 rounded-xl flex items-center gap-3 transition-colors group text-right">
               <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
                 <FileText className="w-5 h-5" />
               </div>
               <span className="font-tajawal font-bold text-green-900">إضافة مقال جديد</span>
             </Link>
+            {isSuperAdmin && <RefreshCacheButton />}
           </div>
         </div>
       </div>
