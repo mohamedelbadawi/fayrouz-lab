@@ -13,7 +13,7 @@ export default async function AdminTestsPage({
 }) {
   const { q, category } = await searchParams;
   
-  const tests = await getTests({ query: q, category, includeDeleted: true });
+  const { data: tests } = await getTests({ query: q, category, includeDeleted: true });
 
   // Helper to safely strip HTML tags
   const stripHtml = (html: string | null) => {
@@ -113,14 +113,9 @@ export default async function AdminTestsPage({
           </table>
         </div>
         
-        {/* Pagination */}
+        {/* Pagination placeholder info */}
         <div className="p-4 border-t border-gray-50 flex items-center justify-between text-sm text-gray-500 font-cairo">
-          <span>عرض {tests?.length || 0} من أصل {tests?.length || 0} نتيجة</span>
-          <div className="flex gap-2 font-tajawal hidden">
-            <button className="px-3 py-1 rounded bg-gray-50 hover:bg-gray-100 transition-colors disabled:opacity-50" disabled>السابق</button>
-            <button className="px-3 py-1 rounded bg-primary-dark-green text-white font-bold">1</button>
-            <button className="px-3 py-1 rounded bg-gray-50 hover:bg-gray-100 transition-colors">التالي</button>
-          </div>
+          <span>عرض {tests?.length || 0} فحص</span>
         </div>
       </div>
     

@@ -14,7 +14,7 @@ export default async function AdminArticlesPage({
 }) {
   const { q, date } = await searchParams;
   
-  const articles = await getArticles({ query: q, dateStr: date, includeDeleted: true });
+  const { data: articles } = await getArticles({ query: q, dateStr: date, includeDeleted: true });
 
   return (
     <div className="space-y-8">

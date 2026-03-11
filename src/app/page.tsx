@@ -9,7 +9,7 @@ import { PopularTestsSection } from "@/features/home/components/PopularTestsSect
 import { EducationalArticlesSection } from "@/features/home/components/EducationalArticlesSection";
 
 export default async function Home() {
-  const popularTests = await getTests({ limit: 4 });
+  const { data: popularTests } = await getTests({ limit: 4 });
   const latestArticles = await getRecentArticles(undefined, 3);
 
   return (

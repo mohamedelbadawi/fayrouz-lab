@@ -7,12 +7,17 @@ interface GetTestsParams {
   category?: string;
   includeDeleted?: boolean;
   limit?: number;
+  page?: number;
+  pageSize?: number;
 }
 
 export const getTests = unstable_cache(
-  async (params?: GetTestsParams): Promise<MedicalTest[]> => {
+  async (params?: GetTestsParams): Promise<{ data: MedicalTest[], totalCount: number }> => {
     const supabase = createPublicClient();
-    let queryBuilder = supabase.from("tests").select("*").order("name");
+    let queryBuilder = supabase
+      .from("tests")
+      .select("*", { count: "exact" })
+      .order("name");
 
     if (!params?.includeDeleted) {
       queryBuilder = queryBuilder.is("deleted_at", null);
@@ -26,16 +31,23 @@ export const getTests = unstable_cache(
       queryBuilder = queryBuilder.eq("category", params.category);
     }
 
-    if (params?.limit) {
+    if (params?.page && params.pageSize) {
+      const from = (params.page - 1) * params.pageSize;
+      const to = from + params.pageSize - 1;
+      queryBuilder = queryBuilder.range(from, to);
+    } else if (params?.limit) {
       queryBuilder = queryBuilder.limit(params.limit);
     }
 
-    const { data, error } = await queryBuilder;
+    const { data, error, count } = await queryBuilder;
     if (error) {
       console.error("Error fetching tests:", error);
-      return [];
+      return { data: [], totalCount: 0 };
     }
-    return data as MedicalTest[];
+    return { 
+      data: (data as MedicalTest[]) || [], 
+      totalCount: count || 0 
+    };
   },
   ['tests'],
   { tags: ['tests'], revalidate: 3600 }

@@ -3,6 +3,7 @@ import { Footer } from "@/components/ui/Footer";
 import { ArticleCard } from "@/features/articles/components/ArticleCard";
 import { ArticlesFilters } from "@/features/articles/components/ArticlesFilters";
 import { getArticles } from "@/services/articles.service";
+import { Pagination } from "@/components/ui/Pagination";
 
 export default async function ArticlesPage({ 
   searchParams 
@@ -12,8 +13,11 @@ export default async function ArticlesPage({
   const resolvedParams = await searchParams;
   const q = typeof resolvedParams.q === 'string' ? resolvedParams.q : '';
   const dateStr = typeof resolvedParams.date === 'string' ? resolvedParams.date : '';
+  const page = typeof resolvedParams.page === 'string' ? parseInt(resolvedParams.page) : 1;
+  const pageSize = 9;
 
-  const articles = await getArticles({ query: q, dateStr });
+  const { data: articles, totalCount } = await getArticles({ query: q, dateStr, page, pageSize });
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -50,17 +54,7 @@ export default async function ArticlesPage({
             )}
           </div>
 
-          <div className="flex justify-center items-center gap-2 font-tajawal hidden">
-            <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-primary-dark-green transition-colors disabled:opacity-50" disabled>
-              السابق
-            </button>
-            <button className="w-10 h-10 rounded-xl bg-primary-dark-green text-white flex items-center justify-center font-bold">
-              1
-            </button>
-            <button className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:bg-gray-50 hover:text-primary-dark-green transition-colors">
-              التالي
-            </button>
-          </div>
+          <Pagination currentPage={page} totalPages={totalPages} />
 
         </div>
       </main>
